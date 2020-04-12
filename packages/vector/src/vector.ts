@@ -124,17 +124,33 @@ export class Vector {
   }
 
   /**
-   * Compute self equals other,
+   * Compute self equals other.
    *
    * @example
    * const vec = new Vector(0, 1);
    * vec.equals({ x: 0, y: 1 }) // true
    * vec.equals({ x: 0, y: 0 }) // false
    * @param v Another vector
-   * @return Self is equals other
+   * @return Self equals other
    */
   equals(v: VectorLike): boolean {
     return this.x === v.x && this.y === v.y;
+  }
+
+  /**
+   * Compute self is closed to other,
+   *
+   * @example
+   * const vec = new Vector(0, 1);
+   * vec.isClosedTo({ x: 0, y: 1 + 10 ** -11 }) // true
+   * vec.isClosedTo({ x: 0, y: 0.01 }) // false
+   * @param v Another vector
+   * @param delta Allowable error
+   * @returns Self is closed to other
+   */
+  isClosedTo(v: VectorLike, delta: number = 10 ** -10): boolean {
+    if (delta < 0) throw new Error("delta is negative");
+    return Math.abs(this.x - v.x) <= delta && Math.abs(this.y - v.y) <= delta;
   }
 
   /**

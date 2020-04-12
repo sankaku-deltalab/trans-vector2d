@@ -98,6 +98,33 @@ describe("@trans-vector2d/vector.Vector", () => {
     expect(vec1.equals(other)).toBe(equal);
   });
 
+  it.each`
+    vector            | other                | equal
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 2 }}    | ${true}
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 2.05 }} | ${true}
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 1.95 }} | ${true}
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 2.15 }} | ${false}
+  `("can tell closed to other", ({ vector, other, equal }) => {
+    const delta = 0.1;
+    const vec = Vector.from(vector);
+
+    expect(vec.isClosedTo(other, delta)).toBe(equal);
+  });
+
+  it("can tell closed to other with default delta", () => {
+    const vec1 = new Vector(1, 2);
+    const vec2 = new Vector(1, 2 + 10 ** -11);
+
+    expect(vec1.isClosedTo(vec2)).toBe(true);
+  });
+
+  it("throw Error when negative delta was passed to isClosedTo", () => {
+    const delta = -0.1;
+    const vec = new Vector(0, 0);
+
+    expect(() => vec.isClosedTo(vec, delta)).toThrowError();
+  });
+
   it("contain zero vector", () => {
     expect(Vector.zero).toEqual({ x: 0, y: 0 });
   });
