@@ -16,6 +16,9 @@ export interface MatrixLike {
 }
 
 /**
+ * Matrix act as transformation matrix.
+ * Matrix is immutable.
+ *
  * [a, c, e,
  *  b, d, f,
  *  0, 0, 1]
@@ -32,6 +35,11 @@ export class Matrix {
     public readonly f: number
   ) {}
 
+  /**
+   * Decompose matrix as translation, rotation and scale.
+   *
+   * @returns self components
+   */
   decompose(): MatrixComponent {
     const translation = { x: this.e, y: this.f };
     const rotation = Math.max(
@@ -46,18 +54,39 @@ export class Matrix {
     return { translation, rotation, scale };
   }
 
+  /**
+   * Create globalized other matrix.
+   *
+   * @param localMatrix
+   * @returns globalized matrix
+   */
   globalize(localMatrix: MatrixLike): Matrix {
     return Matrix.product(this, localMatrix);
   }
 
+  /**
+   * Create localize other matrix.
+   *
+   * @param globalMatrix
+   * @returns localized matrix
+   */
   localize(globalMatrix: MatrixLike): Matrix {
     return Matrix.product(Matrix.inverse(this), globalMatrix);
   }
 
+  /**
+   * Create inverse matrix from self.
+   */
   inverse(): Matrix {
     return Matrix.inverse(this);
   }
 
+  /**
+   * Create translated matrix from self.
+   *
+   * @param delta translation
+   * @returns translated matrix
+   */
   translate(delta: VectorLike): Matrix {
     return new Matrix(
       this.a,
@@ -69,16 +98,34 @@ export class Matrix {
     );
   }
 
+  /**
+   * Create rotated matrix from self.
+   *
+   * @param delta rotation
+   * @returns rotated matrix
+   */
   rotate(delta: number): Matrix {
     const r = Matrix.from({ rotation: delta });
     return Matrix.product(r, this);
   }
 
+  /**
+   * Create scaled matrix from self.
+   *
+   * @param scale
+   * @returns scaled matrix
+   */
   scaled(scale: VectorLike): Matrix {
     const s = Matrix.from({ scale });
     return Matrix.product(s, this);
   }
 
+  /**
+   * Return self equals to other
+   *
+   * @param other other matrix
+   * @returns self equals to other
+   */
   equals(other: MatrixLike): boolean {
     return (
       this.a === other.a &&
@@ -90,14 +137,13 @@ export class Matrix {
     );
   }
 
-  asObject(): MatrixLike {
-    return { a: this.a, b: this.b, c: this.c, d: this.d, e: this.e, f: this.f };
-  }
-
-  asArray(): [number, number, number, number, number, number] {
-    return [this.a, this.b, this.c, this.d, this.e, this.f];
-  }
-
+  /**
+   * Return self elements is closed to other
+   *
+   * @param other other matrix
+   * @param delta allowable error
+   * @returns self is closed to other
+   */
   isClosedTo(other: MatrixLike, delta = 10 ** -10): boolean {
     if (delta < 0) throw new Error("delta is negative");
     return (
@@ -110,6 +156,30 @@ export class Matrix {
     );
   }
 
+  /**
+   * Create object contains elements of self.
+   *
+   * @returns object contains elements of self
+   */
+  asObject(): MatrixLike {
+    return { a: this.a, b: this.b, c: this.c, d: this.d, e: this.e, f: this.f };
+  }
+
+  /**
+   * Create array contains elements of self.
+   *
+   * @returns [a, b, c, d, e, f]
+   */
+  asArray(): [number, number, number, number, number, number] {
+    return [this.a, this.b, this.c, this.d, this.e, this.f];
+  }
+
+  /**
+   * Create Matrix from elements or components.
+   *
+   * @param component object contains elements or translation, rotation, and scale
+   * @returns Matrix
+   */
   static from(component: Partial<MatrixComponent> | MatrixLike): Matrix {
     if ("a" in component) {
       return new Matrix(
@@ -129,6 +199,13 @@ export class Matrix {
     return new Matrix(s.x * cos, s.x * sin, -s.y * sin, s.y * cos, t.x, t.y);
   }
 
+  /**
+   * Create matrix from product.
+   *
+   * @param a
+   * @param b
+   * @returns result
+   */
   static product(a: MatrixLike, b: MatrixLike): Matrix {
     return new Matrix(
       a.a * b.a + a.c * b.b,
@@ -140,6 +217,12 @@ export class Matrix {
     );
   }
 
+  /**
+   * Create matrix from inverse.
+   *
+   * @param m input matrix
+   * @returns inverse matrix
+   */
   static inverse(m: MatrixLike): Matrix {
     // https://www.wolframalpha.com/input/?i=Inverse+[{{a%2Cc%2Ce}%2C{b%2Cd%2Cf}%2C{0%2C0%2C1}}]&lang=ja
     const denom = m.a * m.d - m.b * m.c;
