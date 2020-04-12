@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "run-s build:clean build:tsc",
     "build:clean": "rimraf packages/*/dist",
     "build:tsc": "lerna run build",

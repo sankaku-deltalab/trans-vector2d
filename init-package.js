@@ -34,7 +34,7 @@ const saveTsconfig = (packageName) => {
 const main = () => {
   const args = process.argv.slice(2);
   if (args.length !== 1) throw new Error("arguments required");
-  const re = /(@\w*\/)+(\w*)/;
+  const re = /(@[\w-]*\/)+([\w-]*)/;
   const pkgName = args[0].replace(re, "$2");
   editPackageJson(pkgName);
   saveTsconfig(pkgName);
