@@ -1,4 +1,4 @@
-import { VectorLike } from "@trans-vector2d/vector";
+import { Vector, VectorLike } from "@trans-vector2d/vector";
 
 export interface MatrixComponent {
   translation: VectorLike;
@@ -121,6 +121,26 @@ export class Matrix {
   }
 
   /**
+   * Globalize point.
+   *
+   * @param point local point
+   * @returns globalized point
+   */
+  globalizePoint(point: VectorLike): Vector {
+    return Matrix.productVector(this, point);
+  }
+
+  /**
+   * Localize point.
+   *
+   * @param point global point
+   * @returns localized point
+   */
+  localizePoint(point: VectorLike): Vector {
+    return Matrix.productVector(this.inverse(), point);
+  }
+
+  /**
    * Return self equals to other
    *
    * @param other other matrix
@@ -215,6 +235,17 @@ export class Matrix {
       a.a * b.e + a.c * b.f + a.e,
       a.b * b.e + a.d * b.f + a.f
     );
+  }
+
+  /**
+   * Create Vector from m*v.
+   *
+   * @param m matrix
+   * @param v vector
+   * @returns Vector
+   */
+  static productVector(m: MatrixLike, v: VectorLike): Vector {
+    return new Vector(m.a * v.x + m.c * v.y + m.e, m.b * v.x + m.d * v.y + m.f);
   }
 
   /**

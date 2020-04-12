@@ -206,6 +206,30 @@ describe("@trans-vector2d/matrix.Matrix", () => {
     expect(m.isClosedTo(m3)).toBe(false);
   });
 
+  it("can globalize point", () => {
+    const localPoint = { x: 1, y: 2 };
+    const m = Matrix.from({
+      translation: { x: 3, y: 4 },
+      rotation: Math.PI / 2,
+    });
+
+    const globalPoint = m.globalizePoint(localPoint);
+    expect(globalPoint.x).toBeCloseTo(1);
+    expect(globalPoint.y).toBeCloseTo(5);
+  });
+
+  it("can localize point", () => {
+    const globalPoint = { x: 1, y: 5 };
+    const m = Matrix.from({
+      translation: { x: 3, y: 4 },
+      rotation: Math.PI / 2,
+    });
+
+    const localPoint = m.localizePoint(globalPoint);
+    expect(localPoint.x).toBeCloseTo(1);
+    expect(localPoint.y).toBeCloseTo(2);
+  });
+
   it("throw Error when use negative delta in isClosedTo()", () => {
     const delta = 10 * -1;
     const m = new Matrix(1, 2, 3, 4, 5, 6);
