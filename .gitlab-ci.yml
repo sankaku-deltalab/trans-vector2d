@@ -1,0 +1,17 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - npm ci
+    - npx lerna bootstrap
+    - npm run build
+    - npm run test
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
