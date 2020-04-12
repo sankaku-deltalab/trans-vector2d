@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "TODO: git@xxxx:xxxx.git"
+    "url": "git@github.com:sankaku-deltalab/trans-vector2d.git"
   },
   "author": "",
   "license": "ISC",
