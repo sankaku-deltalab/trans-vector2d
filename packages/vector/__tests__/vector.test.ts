@@ -42,6 +42,17 @@ describe("@trans-vector2d/vector.Vector", () => {
     expect(vec1.norm()).toBeCloseTo(2);
   });
 
+  it.each`
+    vector            | other             | distance
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 2 }} | ${0}
+    ${{ x: 1, y: 2 }} | ${{ x: 1, y: 3 }} | ${1}
+    ${{ x: 1, y: 2 }} | ${{ x: 2, y: 2 }} | ${1}
+  `("can tell distance between other", ({ vector, other, distance }) => {
+    const vec = Vector.from(vector);
+
+    expect(vec.distance(other)).toBeCloseTo(distance);
+  });
+
   it("can create unit vector", () => {
     const vec1 = new Vector(1, Math.sqrt(3));
 

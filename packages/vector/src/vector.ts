@@ -88,6 +88,20 @@ export class Vector {
   }
 
   /**
+   * Compute distance between other vector.
+   *
+   * @example
+   * new Vector(1, 2).distance({ x: 1, y: 3 }) // 1
+   * @param other Another Point
+   * @returns Distance between self and other
+   */
+  distance(other: VectorLike): number {
+    const deltaX = this.x - other.x;
+    const deltaY = this.y - other.y;
+    return Math.sqrt(deltaX ** 2 + deltaY ** 2);
+  }
+
+  /**
    * Create unit vector.
    *
    * @example
