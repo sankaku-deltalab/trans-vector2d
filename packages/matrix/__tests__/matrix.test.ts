@@ -170,7 +170,7 @@ describe("@trans-vector2d/matrix.Matrix", () => {
 
   it("can create scaled matrix", () => {
     const m = Matrix.from({ translation: { x: 1, y: 2 } });
-    const m2 = m.scaled({ x: 3, y: 4 });
+    const m2 = m.scale({ x: 3, y: 4 });
 
     const decomposed = m2.decompose();
     expect(decomposed.translation).toEqual({ x: 3, y: 8 });

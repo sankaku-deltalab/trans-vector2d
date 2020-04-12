@@ -115,7 +115,7 @@ export class Matrix {
    * @param scale
    * @returns scaled matrix
    */
-  scaled(scale: VectorLike): Matrix {
+  scale(scale: VectorLike): Matrix {
     const s = Matrix.from({ scale });
     return Matrix.product(s, this);
   }
