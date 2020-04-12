@@ -73,15 +73,6 @@ describe("@trans-vector2d/vector.Vector", () => {
     expect(vec2.y).toBeCloseTo(vec1.y);
   });
 
-  it("can created by array", () => {
-    const vec1: [number, number] = [3, 5];
-
-    const vec2 = Vector.from(vec1);
-    expect(vec2).toBeInstanceOf(Vector);
-    expect(vec2.x).toBeCloseTo(vec1[0]);
-    expect(vec2.y).toBeCloseTo(vec1[1]);
-  });
-
   it("can create object", () => {
     const vec1 = new Vector(1, 2);
 
