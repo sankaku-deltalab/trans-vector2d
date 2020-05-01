@@ -10,8 +10,8 @@ stages:
 test:
   stage: test
   script:
+    - npm config set unsafe-perm true
     - npm ci
     - npx lerna bootstrap
-    - npm run build
     - npm run test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/

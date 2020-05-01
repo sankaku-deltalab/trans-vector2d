@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "tsc"
+    "prepare": "tsc"
   },
   "types": "dist/index.d.ts",
   "devDependencies": {

@@ -10,7 +10,7 @@ const editPackageJson = (packageName) => {
     .set("main", "dist/index.js")
     .set("module", "dist/index.js")
     .set("types", "dist/index.d.ts")
-    .set("scripts.build", "tsc")
+    .set("scripts.prepare", "tsc")
     .save();
 };
 
@@ -31,6 +31,13 @@ const saveTsconfig = (packageName) => {
   fs.writeFileSync(cfgPath, tsconfigText);
 };
 
+const addIndexFile = (packageName) => {
+  const indexText = `export * from "./${packageName}";
+`;
+  const filePath = path.join("packages/", packageName, "src", "index.ts");
+  fs.writeFileSync(filePath, indexText);
+};
+
 const main = () => {
   const args = process.argv.slice(2);
   if (args.length !== 1) throw new Error("arguments required");
@@ -38,6 +45,7 @@ const main = () => {
   const pkgName = args[0].replace(re, "$2");
   editPackageJson(pkgName);
   saveTsconfig(pkgName);
+  addIndexFile(pkgName);
 };
 
 main();
