@@ -87,7 +87,7 @@ export class Matrix {
    * @param delta translation
    * @returns translated matrix
    */
-  translate(delta: VectorLike): Matrix {
+  translated(delta: VectorLike): Matrix {
     return new Matrix(
       this.a,
       this.b,
@@ -104,7 +104,7 @@ export class Matrix {
    * @param delta rotation
    * @returns rotated matrix
    */
-  rotate(delta: number): Matrix {
+  rotated(delta: number): Matrix {
     const r = Matrix.from({ rotation: delta });
     return Matrix.product(r, this);
   }
@@ -115,7 +115,7 @@ export class Matrix {
    * @param scale
    * @returns scaled matrix
    */
-  scale(scale: VectorLike): Matrix {
+  scaled(scale: VectorLike): Matrix {
     const s = Matrix.from({ scale });
     return Matrix.product(s, this);
   }

@@ -148,7 +148,7 @@ describe("@trans-vector2d/matrix.Matrix", () => {
 
   it("can create translated matrix", () => {
     const m = Matrix.from({ translation: { x: 1, y: 2 } });
-    const m2 = m.translate({ x: 3, y: 4 });
+    const m2 = m.translated({ x: 3, y: 4 });
 
     const decomposed = m2.decompose();
     expect(decomposed.translation).toEqual({ x: 4, y: 6 });
@@ -158,7 +158,7 @@ describe("@trans-vector2d/matrix.Matrix", () => {
 
   it("can create rotated matrix", () => {
     const m = Matrix.from({ translation: { x: 1, y: 2 }, rotation: 1 });
-    const m2 = m.rotate(Math.PI / 2);
+    const m2 = m.rotated(Math.PI / 2);
 
     const decomposed = m2.decompose();
     expect(decomposed.translation.x).toBeCloseTo(-2);
@@ -170,7 +170,7 @@ describe("@trans-vector2d/matrix.Matrix", () => {
 
   it("can create scaled matrix", () => {
     const m = Matrix.from({ translation: { x: 1, y: 2 } });
-    const m2 = m.scale({ x: 3, y: 4 });
+    const m2 = m.scaled({ x: 3, y: 4 });
 
     const decomposed = m2.decompose();
     expect(decomposed.translation).toEqual({ x: 3, y: 8 });
