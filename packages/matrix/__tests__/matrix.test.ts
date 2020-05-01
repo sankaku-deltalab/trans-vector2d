@@ -259,6 +259,33 @@ describe("@trans-vector2d/matrix.Matrix", () => {
     expect(e.scale).toEqual({ x: 1, y: 1 });
   });
 
+  it("can create translation matrix", () => {
+    const m = Matrix.translation({ x: 1, y: 2 });
+    const c = m.decompose();
+
+    expect(c.translation).toEqual({ x: 1, y: 2 });
+    expect(c.rotation).toBeCloseTo(0);
+    expect(c.scale).toEqual({ x: 1, y: 1 });
+  });
+
+  it("can create rotation matrix", () => {
+    const m = Matrix.rotation(1);
+    const c = m.decompose();
+
+    expect(c.translation).toEqual({ x: 0, y: 0 });
+    expect(c.rotation).toBeCloseTo(1);
+    expect(c.scale).toEqual({ x: 1, y: 1 });
+  });
+
+  it("can create scaling matrix", () => {
+    const m = Matrix.scaling({ x: 1, y: 2 });
+    const c = m.decompose();
+
+    expect(c.translation).toEqual({ x: 0, y: 0 });
+    expect(c.rotation).toBeCloseTo(0);
+    expect(c.scale).toEqual({ x: 1, y: 2 });
+  });
+
   it("can compute product", () => {
     const m1 = new Matrix(1, 2, 3, 4, 5, 6);
     const m2 = new Matrix(7, 8, 9, 10, 11, 12);

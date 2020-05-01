@@ -195,6 +195,36 @@ export class Matrix {
   }
 
   /**
+   * Create translating matrix.
+   *
+   * @param delta Translation.
+   * @returns Translation matrix.
+   */
+  static translation(delta: VectorLike): Matrix {
+    return Matrix.identity.translated(delta);
+  }
+
+  /**
+   * Create rotating matrix.
+   *
+   * @param angle Rotation angle in radians.
+   * @returns Rotation matrix.
+   */
+  static rotation(angle: number): Matrix {
+    return Matrix.identity.rotated(angle);
+  }
+
+  /**
+   * Create scaling matrix.
+   *
+   * @param scale Scale.
+   * @returns Scaling matrix.
+   */
+  static scaling(scale: VectorLike): Matrix {
+    return Matrix.identity.scaled(scale);
+  }
+
+  /**
    * Create Matrix from elements or components.
    *
    * @param component object contains elements or translation, rotation, and scale
