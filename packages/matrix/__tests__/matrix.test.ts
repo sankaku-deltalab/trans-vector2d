@@ -1,5 +1,28 @@
 import { Matrix } from "../src";
 
+const globalizingMatrixes = (): {
+  baseMatrix: Matrix;
+  localMatrix: Matrix;
+  globalMatrix: Matrix;
+} => {
+  const baseMatrix = Matrix.from({
+    translation: { x: 1, y: 1 },
+    rotation: Math.PI / 2,
+    scale: { x: 0.5, y: 1 },
+  });
+  const localMatrix = Matrix.from({
+    translation: { x: 2, y: 1 },
+    rotation: 0,
+    scale: { x: 1, y: 1 },
+  });
+  const globalMatrix = Matrix.from({
+    translation: { x: 0, y: 2 },
+    rotation: Math.PI / 2,
+    scale: { x: 0.5, y: 1 },
+  });
+  return { baseMatrix, localMatrix, globalMatrix };
+};
+
 describe("@trans-vector2d/matrix.Matrix", () => {
   it("can be created from translation, rotation and scale", () => {
     const m = Matrix.from({
@@ -93,57 +116,29 @@ describe("@trans-vector2d/matrix.Matrix", () => {
   });
 
   it("can globalize other matrix", () => {
-    const baseMatrix = Matrix.from({
-      translation: { x: 1, y: 1 },
-      rotation: Math.PI / 2,
-      scale: { x: 0.5, y: 1 },
-    });
-    const localMatrix = Matrix.from({
-      translation: { x: 2, y: 1 },
-      rotation: 0,
-      scale: { x: 1, y: 1 },
-    });
-    const expectedGlobal = {
-      translation: { x: 0, y: 2 },
-      rotation: Math.PI / 2,
-      scale: { x: 0.5, y: 1 },
-    };
+    const { baseMatrix, localMatrix, globalMatrix } = globalizingMatrixes();
 
-    const globalizedMatrix = baseMatrix.globalize(localMatrix);
-    const globalized = globalizedMatrix.decompose();
+    const globalized1 = baseMatrix.globalize(localMatrix);
+    const globalized2 = localMatrix.globalizedBy(baseMatrix);
 
-    expect(globalized.translation.x).toBeCloseTo(expectedGlobal.translation.x);
-    expect(globalized.translation.y).toBeCloseTo(expectedGlobal.translation.y);
-    expect(globalized.rotation).toBeCloseTo(expectedGlobal.rotation);
-    expect(globalized.scale.x).toEqual(expectedGlobal.scale.x);
-    expect(globalized.scale.y).toEqual(expectedGlobal.scale.y);
+    for (const v of "abcdef") {
+      const v2 = v as "a" | "b" | "c" | "d" | "e" | "f";
+      expect(globalized1[v2]).toBeCloseTo(globalMatrix[v2]);
+      expect(globalized2[v2]).toBeCloseTo(globalMatrix[v2]);
+    }
   });
 
   it("can localize other matrix", () => {
-    const baseMatrix = Matrix.from({
-      translation: { x: 1, y: 1 },
-      rotation: Math.PI / 2,
-      scale: { x: 0.5, y: 1 },
-    });
-    const globalMatrix = Matrix.from({
-      translation: { x: 0, y: 2 },
-      rotation: Math.PI / 2,
-      scale: { x: 0.5, y: 1 },
-    });
-    const expectedLocal = {
-      translation: { x: 2, y: 1 },
-      rotation: 0,
-      scale: { x: 1, y: 1 },
-    };
+    const { baseMatrix, localMatrix, globalMatrix } = globalizingMatrixes();
 
-    const localizedMatrix = baseMatrix.localize(globalMatrix);
-    const localized = localizedMatrix.decompose();
+    const localized1 = baseMatrix.localize(globalMatrix);
+    const localized2 = globalMatrix.localizedBy(baseMatrix);
 
-    expect(localized.translation.x).toBeCloseTo(expectedLocal.translation.x);
-    expect(localized.translation.y).toBeCloseTo(expectedLocal.translation.y);
-    expect(localized.rotation).toBeCloseTo(expectedLocal.rotation);
-    expect(localized.scale.x).toEqual(expectedLocal.scale.x);
-    expect(localized.scale.y).toEqual(expectedLocal.scale.y);
+    for (const v of "abcdef") {
+      const v2 = v as "a" | "b" | "c" | "d" | "e" | "f";
+      expect(localized1[v2]).toBeCloseTo(localMatrix[v2]);
+      expect(localized2[v2]).toBeCloseTo(localMatrix[v2]);
+    }
   });
 
   it("can create translated matrix", () => {

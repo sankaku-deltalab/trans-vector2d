@@ -75,6 +75,26 @@ export class Matrix {
   }
 
   /**
+   * Create matrix globalized by other matrix.
+   *
+   * @param globalMatrix
+   * @return globalized matrix
+   */
+  globalizedBy(globalMatrix: MatrixLike): Matrix {
+    return Matrix.product(globalMatrix, this);
+  }
+
+  /**
+   * Create matrix localized by other matrix.
+   *
+   * @param localMatrix
+   * @returns localized matrix
+   */
+  localizedBy(localMatrix: MatrixLike): Matrix {
+    return Matrix.product(Matrix.inverse(localMatrix), this);
+  }
+
+  /**
    * Create inverse matrix from self.
    */
   inverse(): Matrix {
