@@ -1,7 +1,7 @@
 {
   "name": "trans-vector2d",
   "version": "1.0.0",
-  "description": "> TODO: description",
+  "description": "Immutable 2d vector and transformation-matrix",
   "author": "Sankaku <sankaku_dlt.45631@outlook.jp>",
   "homepage": "",
   "license": "ISC",
