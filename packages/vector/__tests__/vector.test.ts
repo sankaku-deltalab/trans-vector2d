@@ -88,13 +88,18 @@ describe("@trans-vector2d/vector.Vector", () => {
     expect(vec1.angle()).toBeCloseTo(Math.PI / 3);
   });
 
-  it("can created by object", () => {
-    const vec1 = { x: 3, y: 5 };
+  it.each`
+    x            | y
+    ${1}         | ${1}
+    ${undefined} | ${1}
+    ${1}         | ${undefined}
+    ${undefined} | ${undefined}
+  `("can created by object { x: $x, y: $y }", ({ x, y }) => {
+    const vec = Vector.from({ x, y });
 
-    const vec2 = Vector.from(vec1);
-    expect(vec2).toBeInstanceOf(Vector);
-    expect(vec2.x).toBeCloseTo(vec1.x);
-    expect(vec2.y).toBeCloseTo(vec1.y);
+    expect(vec).toBeInstanceOf(Vector);
+    expect(vec.x).toBeCloseTo(x || 0);
+    expect(vec.y).toBeCloseTo(y || 0);
   });
 
   it("can create object", () => {

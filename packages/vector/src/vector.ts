@@ -202,9 +202,12 @@ export class Vector {
    * Create Vector from object or array.
    * @example
    * Vector.from({ x: 1, y: 2 }) // { x: 1, y: 2 } as Vector
+   * Vector.from({ y: 2 }) // { x: 0, y: 2 } as Vector
    * @param v Object or array
    */
-  static from(v: VectorLike): Vector {
-    return new Vector(v.x, v.y);
+  static from(v: Partial<VectorLike>): Vector {
+    const x = v.x || 0;
+    const y = v.y || 0;
+    return new Vector(x, y);
   }
 }
