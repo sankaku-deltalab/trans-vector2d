@@ -16,7 +16,7 @@ import { Vector } from "transformation-matrix";
 const v1 = new Vector(1, 2);
 const v2 = new Vector(...[1, 2]);
 const v3 = Vector.from({ x: 1, y: 2 });
-const v4 = Vector.from({ x: 1, y: 2 });
+const v4 = Vector.from({ y: 2 });
 const vOne = Vector.one; // { x: 1, y: 1 }
 const vZero = Vector.zero; // { x: 0, y: 0 }
 
@@ -30,6 +30,7 @@ const v = v1
 console.log(v.x, v.y);
 // v.x = 1; // error
 
+const abs = v1.abs();
 const norm = v1.norm();
 const distance = v1.distance(v2);
 const unitVector = v1.unit(); // norm = 1
@@ -63,14 +64,19 @@ const mE = Matrix.identity;
 const m = m1
   .globalize(m2)
   .localize(m2)
+  .globalizedBy(m2)
+  .localizedBy(m2)
   .inverse()
-  .translate({ x: 1, y: 2 })
-  .rotate(Math.PI)
-  .scale({ x: 1, y: 1 });
+  .translated({ x: 1, y: 2 })
+  .rotated(Math.PI)
+  .scaled({ x: 1, y: 1 });
 
 console.log(m.a, m.b, m.c, m.d, m.e, m.e);
 // m.a = 1; // error
 
+const t = Matrix.translation({ x: 1, y: 2 });
+const r = Matrix.rotation(Math.PI);
+const s = Matrix.scaling({ x: 1, y: 2 });
 const { translation, rotation. scale} = m1.decompose();
 const gPoint = m1.globalizePoint({ x: 3, y: 4 });
 const lPoint = m1.localizePoint({ x: 3, y: 4 });
