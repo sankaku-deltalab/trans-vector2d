@@ -40,17 +40,14 @@ export class Matrix {
    *
    * @returns self components
    */
-  decompose(): MatrixComponent {
-    const translation = { x: this.e, y: this.f };
+  decompose(): { translation: Vector; rotation: number; scale: Vector } {
+    const translation = new Vector(this.e, this.f);
     const rotation = Math.max(
       Math.atan2(this.b, this.a),
       Math.atan2(-this.c, this.d)
     );
     const cos = Math.cos(rotation);
-    const scale = {
-      x: this.a / cos,
-      y: this.d / cos,
-    };
+    const scale = new Vector(this.a / cos, this.d / cos);
     return { translation, rotation, scale };
   }
 

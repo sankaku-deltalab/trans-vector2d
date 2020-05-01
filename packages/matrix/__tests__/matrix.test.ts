@@ -1,4 +1,5 @@
 import { Matrix } from "../src";
+import { Vector } from "@trans-vector2d/vector";
 
 const globalizingMatrixes = (): {
   baseMatrix: Matrix;
@@ -58,9 +59,12 @@ describe("@trans-vector2d/matrix.Matrix", () => {
     const matrix = Matrix.from({ translation, rotation, scale });
     const decomposed = matrix.decompose();
 
-    expect(decomposed.translation).toEqual(translation);
+    expect(decomposed.translation).toBeInstanceOf(Vector);
+    expect(decomposed.scale).toBeInstanceOf(Vector);
+
+    expect(decomposed.translation).toEqual(Vector.from(translation));
     expect(decomposed.rotation).toBeCloseTo(rotation);
-    expect(decomposed.scale).toEqual(scale);
+    expect(decomposed.scale).toEqual(Vector.from(scale));
   });
 
   it.each`
