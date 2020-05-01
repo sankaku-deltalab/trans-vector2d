@@ -36,6 +36,19 @@ describe("@trans-vector2d/vector.Vector", () => {
     expect(vec1.div(scaler2)).toEqual(new Vector(0.5, 1));
   });
 
+  it.each`
+    x     | y
+    ${1}  | ${2}
+    ${-3} | ${4}
+    ${5}  | ${-6}
+    ${-7} | ${-8}
+  `("can create abs vector from { x: $x, y: $y }", ({ x, y }) => {
+    const vec = new Vector(x, y).abs();
+
+    expect(vec.x).toBe(Math.abs(x));
+    expect(vec.y).toBe(Math.abs(y));
+  });
+
   it("can tell norm", () => {
     const vec1 = new Vector(1, Math.sqrt(3));
 

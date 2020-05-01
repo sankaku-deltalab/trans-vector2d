@@ -88,6 +88,15 @@ export class Vector {
   }
 
   /**
+   * Create Vector each elements is abs.
+   *
+   * @returns Non-negative Vector
+   */
+  abs(): Vector {
+    return new Vector(Math.abs(this.x), Math.abs(this.y));
+  }
+
+  /**
    * Compute distance between other vector.
    *
    * @example
