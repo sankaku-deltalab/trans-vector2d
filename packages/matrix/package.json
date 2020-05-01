@@ -1,6 +1,6 @@
 {
   "name": "@trans-vector2d/matrix",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "> TODO: description",
   "author": "Sankaku <sankaku_dlt.45631@outlook.jp>",
   "homepage": "",
@@ -30,6 +30,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@trans-vector2d/vector": "^1.0.0"
+    "@trans-vector2d/vector": "^2.0.0"
   }
 }
