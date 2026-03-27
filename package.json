@@ -29,7 +29,7 @@
     "@typescript-eslint/parser": "^2.27.0",
     "@typescript-eslint/typescript-estree": "^2.27.0",
     "edit-json-file": "^1.4.0",
-    "eslint": "^6.8.0",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "esm": "^3.2.25",
